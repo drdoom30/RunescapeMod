@@ -1,117 +1,132 @@
 package net.minecraft.src;
 
-import java.io.File;
-import java.util.*;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.Init;
+import cpw.mods.fml.common.SidedProxy;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.forge.*;
+import net.minecraft.src.EnumGameType;
+import net.minecraft.src.EnumOS;
+import net.minecraft.src.EnumOptions;
+import net.minecraft.src.EnumRarity;
+import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.EnumHelper;
+import net.minecraftforge.common.MinecraftForge;
 
-public class mod_Runescape extends BaseMod{
+import java.io.File;
+
+@Mod(modid = "Runescape", name = "Runescape", version = "1.15")
+@NetworkMod(clientSideRequired = true, serverSideRequired = false)
+
+public class mod_Runescape {
 	
-	  static Configuration lmconfiguration = new Configuration(new File(Minecraft.getMinecraftDir(), "config/Runescape.cfg"));
+	static Configuration lmconfiguration = new Configuration(new File(Minecraft.getMinecraftDir(), "config/Runescape.cfg"));
 	
-	    static int RuneBlockID = configurationProperties();
-		static int BronzeBlockID = configurationProperties();
-		static int SteelBlockID = configurationProperties();
-		static int AdamantiteBlockID = configurationProperties();
-		static int MithrilBlockID = configurationProperties();
-		static int DragonBlockID = configurationProperties();
-		
-		static int BronzeignotShiftedIndex;
-		static int RuneignotShiftedIndex;
-		static int SteelignotShiftedIndex;
-		static int AdamantiteignotShiftedIndex;
-		static int MithrilignotShiftedIndex;
-		static int DragonignotShiftedIndex;
-		
-		static int RuneHelmetShiftedIndex ;
-		static int RuneLegsShiftedIndex;
-		static int RunePlateShiftedIndex;
-		static int RuneBootShiftedIndex;
-		static int RunehoeShiftedIndex;
-		static int RuneaxeShiftedIndex;
-		static int RuneswordShiftedIndex;
-		static int RunepickShiftedIndex;     
-		static int RuneshovelShiftedIndex;
-		
-		static int DragonHelmetShiftedIndex ;
-		static int DragonLegsShiftedIndex;
-		static int DragonPlateShiftedIndex;
-		static int DragonBootShiftedIndex;
-		static int DragonhoeShiftedIndex;
-		static int DragonaxeShiftedIndex;
-		static int DragonswordShiftedIndex;
-		static int DragonpickShiftedIndex;     
-		static int DragonshovelShiftedIndex;
-	     
-		
-		static int BronzeHelmetShiftedIndex ;
-		static int BronzeLegsShiftedIndex;
-		static int BronzePlateShiftedIndex;
-		static int BronzeBootShiftedIndex;
-		static int BronzehoeShiftedIndex;
-		static int BronzeaxeShiftedIndex;
-		static int BronzeswordShiftedIndex;
-		static int BronzepickShiftedIndex;     
-		static int BronzeshovelShiftedIndex;
-	    
-		
-		static int SteelHelmetShiftedIndex ;
-		static int SteelLegsShiftedIndex;
-		static int SteelPlateShiftedIndex;
-		static int SteelBootShiftedIndex;
-		static int SteelhoeShiftedIndex;
-		static int SteelaxeShiftedIndex;
-		static int SteelswordShiftedIndex;
-		static int SteelpickShiftedIndex;     
-		static int SteelshovelShiftedIndex;
-		
-		static int AdamantiteHelmetShiftedIndex ;
-		static int AdamantiteLegsShiftedIndex;
-		static int AdamantitePlateShiftedIndex;
-		static int AdamantiteBootShiftedIndex;
-		static int AdamantitehoeShiftedIndex;
-		static int AdamantiteaxeShiftedIndex;
-		static int AdamantiteswordShiftedIndex;
-		static int AdamantitepickShiftedIndex;     
-		static int AdamantiteshovelShiftedIndex;
-		
-		static int MithrilHelmetShiftedIndex ;
-		static int MithrilLegsShiftedIndex;
-		static int MithrilPlateShiftedIndex;
-		static int MithrilBootShiftedIndex;
-		static int MithrilhoeShiftedIndex;
-		static int MithrilaxeShiftedIndex;
-		static int MithrilswordShiftedIndex;
-		static int MithrilpickShiftedIndex;     
-		static int MithrilshovelShiftedIndex;
-		
-		
+	static int RuneBlockID = configurationProperties();
+	static int BronzeBlockID = configurationProperties();
+	static int SteelBlockID = configurationProperties();
+	static int AdamantiteBlockID = configurationProperties();
+	static int MithrilBlockID = configurationProperties();
+	static int DragonBlockID = configurationProperties();
+
+	static int BronzeignotShiftedIndex;
+	static int RuneignotShiftedIndex;
+	static int SteelignotShiftedIndex;
+	static int AdamantiteignotShiftedIndex;
+	static int MithrilignotShiftedIndex;
+	static int DragonignotShiftedIndex;
+
+	static int RuneHelmetShiftedIndex ;
+	static int RuneLegsShiftedIndex;
+	static int RunePlateShiftedIndex;
+	static int RuneBootShiftedIndex;
+	static int RunehoeShiftedIndex;
+	static int RuneaxeShiftedIndex;
+	static int RuneswordShiftedIndex;
+	static int RunepickShiftedIndex;     
+	static int RuneshovelShiftedIndex;
+
+	static int DragonHelmetShiftedIndex ;
+	static int DragonLegsShiftedIndex;
+	static int DragonPlateShiftedIndex;
+	static int DragonBootShiftedIndex;
+	static int DragonhoeShiftedIndex;
+	static int DragonaxeShiftedIndex;
+	static int DragonswordShiftedIndex;
+	static int DragonpickShiftedIndex;     
+	static int DragonshovelShiftedIndex;
+
+
+	static int BronzeHelmetShiftedIndex ;
+	static int BronzeLegsShiftedIndex;
+	static int BronzePlateShiftedIndex;
+	static int BronzeBootShiftedIndex;
+	static int BronzehoeShiftedIndex;
+	static int BronzeaxeShiftedIndex;
+	static int BronzeswordShiftedIndex;
+	static int BronzepickShiftedIndex;     
+	static int BronzeshovelShiftedIndex;
+
+
+	static int SteelHelmetShiftedIndex ;
+	static int SteelLegsShiftedIndex;
+	static int SteelPlateShiftedIndex;
+	static int SteelBootShiftedIndex;
+	static int SteelhoeShiftedIndex;
+	static int SteelaxeShiftedIndex;
+	static int SteelswordShiftedIndex;
+	static int SteelpickShiftedIndex;     
+	static int SteelshovelShiftedIndex;
+
+	static int AdamantiteHelmetShiftedIndex ;
+	static int AdamantiteLegsShiftedIndex;
+	static int AdamantitePlateShiftedIndex;
+	static int AdamantiteBootShiftedIndex;
+	static int AdamantitehoeShiftedIndex;
+	static int AdamantiteaxeShiftedIndex;
+	static int AdamantiteswordShiftedIndex;
+	static int AdamantitepickShiftedIndex;     
+	static int AdamantiteshovelShiftedIndex;
+
+	static int MithrilHelmetShiftedIndex ;
+	static int MithrilLegsShiftedIndex;
+	static int MithrilPlateShiftedIndex;
+	static int MithrilBootShiftedIndex;
+	static int MithrilhoeShiftedIndex;
+	static int MithrilaxeShiftedIndex;
+	static int MithrilswordShiftedIndex;
+	static int MithrilpickShiftedIndex;     
+	static int MithrilshovelShiftedIndex;
+	
+	public static Block blockRune;
+	public static Block blockBronze;
+	public static Block blockSteel;
+	public static Block blockAdamantite;
+	public static Block blockMithril;
+	public static Block blockDragon;
 	
 	static EnumArmorMaterial Rune = EnumHelper.addArmorMaterial("RUNE", 33, new int[]{3, 8, 6, 3}, 10);
 	static EnumToolMaterial RuneT = EnumHelper.addToolMaterial("RUNE", 3, 1561, 8.0F, 3, 10);
 	
 	static EnumArmorMaterial Dragon = EnumHelper.addArmorMaterial("Dragon", 48, new int[]{3, 10, 8, 3}, 20);
 	static EnumToolMaterial DragonT = EnumHelper.addToolMaterial("Dragon", 3, 2015, 8.0F, 3, 10);
-	
+
 	static EnumArmorMaterial Bronze = EnumHelper.addArmorMaterial("BRONZE", 11, new int[] {3, 6, 5, 2}, 9);
 	static EnumToolMaterial BronzeT = EnumHelper.addToolMaterial("BRONZE", 1, 131, 4.0F, 1, 5);
-	
+
 	static EnumArmorMaterial Steel = EnumHelper.addArmorMaterial("STEEL", 7, new int[] {1, 4, 3, 2}, 9);
 	static EnumToolMaterial SteelT = EnumHelper.addToolMaterial("STEEL", 2, 250, 6.0F, 2, 14);
-	
+
 	static EnumArmorMaterial Adamantite = EnumHelper.addArmorMaterial("ADDY", 28, new int[]{2, 6, 4, 1}, 25);
 	static EnumToolMaterial AdamantiteT = EnumHelper.addToolMaterial("ADDY", 3, 1123, 12.0F, 3, 22);
-	
+
 	static EnumArmorMaterial Mithril = EnumHelper.addArmorMaterial("MITH", 28, new int[]{2, 6, 4, 1}, 25);
 	static EnumToolMaterial MithrilT = EnumHelper.addToolMaterial("MITH", 3, 1123, 12.0F, 3, 22);
 	
-	public static final Block blockRune = new RuneBlockOre(RuneBlockID, 0).setHardness(3F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setBlockName("Rune Ore");
-    public static final Block blockBronze = new BronzeBlockOre(BronzeBlockID, 1).setHardness(3F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setBlockName("Bronze Ore");
-    public static final Block blockSteel = new SteelBlockOre(SteelBlockID, 2).setHardness(3F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setBlockName("Steel Ore");
-    public static final Block blockAdamantite = new AddyBlockOre(AdamantiteBlockID, 3).setHardness(3F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setBlockName("Adamantite Ore");
-    public static final Block blockMithril = new MithBlockOre(MithrilBlockID, 4).setHardness(3F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setBlockName("Mithril Ore");
-    public static final Block blockDragon = new DragonBlockOre(DragonBlockID, 5).setHardness(3F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setBlockName("Dragonite Ore");
-    
 	public static final Item bootsRune = (new RuneScapeArmor(RuneBootShiftedIndex-256, Rune, 8, 3)).setIconCoord(0, 0).setItemName("Rune Boots");
     public static final Item helmetRune = (new RuneScapeArmor(RuneHelmetShiftedIndex-256, Rune, 8, 0)).setIconCoord(1, 0).setItemName("Rune Helmet");
     public static final Item plateRune = (new RuneScapeArmor(RunePlateShiftedIndex-256, Rune, 8, 1)).setIconCoord(2, 0).setItemName("Rune Chest");
@@ -162,7 +177,7 @@ public class mod_Runescape extends BaseMod{
     public static final Item axeAdamantite = (new RuneAxe(AdamantiteaxeShiftedIndex-256, AdamantiteT)).setIconCoord(5, 2).setItemName("Adamantite Hatchet");
     public static final Item swordAdamantite = (new RuneSword(AdamantiteswordShiftedIndex-256, AdamantiteT)).setIconCoord(6, 2).setItemName("Adamantite Sword");
     public static final Item hoeAdamantite = (new RuneHoe(AdamantitehoeShiftedIndex-256, AdamantiteT)).setIconCoord(7,2).setItemName("Adamantite Hoe");
-	
+
     public static final Item bootsMithril = (new RuneScapeArmor(MithrilBootShiftedIndex-256, Mithril, 10, 3)).setIconCoord(9, 2).setItemName("Mithril Boots");
     public static final Item helmetMithril = (new RuneScapeArmor(MithrilHelmetShiftedIndex-256, Mithril, 10, 0)).setIconCoord(10, 2).setItemName("Mithril Helmet");
     public static final Item plateMithril = (new RuneScapeArmor(MithrilPlateShiftedIndex-256, Mithril, 10, 1)).setIconCoord(11, 2).setItemName("Mithril Chest");
@@ -184,15 +199,20 @@ public class mod_Runescape extends BaseMod{
     public static final Item axeDragon = (new RuneAxe(DragonaxeShiftedIndex-256, DragonT)).setIconCoord(9, 3).setItemName("Dragon Hatchet");
     public static final Item swordDragon = (new RuneSword(DragonswordShiftedIndex-256, DragonT)).setIconCoord(10, 3).setItemName("Dragon Sword");
     public static final Item hoeDragon = (new RuneHoe(DragonhoeShiftedIndex-256, DragonT)).setIconCoord(11,3).setItemName("Dragon Hoe");
-    
-	public void load() {
-		
-		
 	
+	@Init
+	 public void load(FMLInitializationEvent event)
+	 {
+		blockRune = new RuneBlockOre(RuneBlockID, 0).setHardness(3F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setBlockName("Rune Ore");
+	    blockBronze = new BronzeBlockOre(BronzeBlockID, 1).setHardness(3F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setBlockName("Bronze Ore");
+	    blockSteel = new SteelBlockOre(SteelBlockID, 2).setHardness(3F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setBlockName("Steel Ore");
+	    blockAdamantite = new AddyBlockOre(AdamantiteBlockID, 3).setHardness(3F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setBlockName("Adamantite Ore");
+	    blockMithril = new MithBlockOre(MithrilBlockID, 4).setHardness(3F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setBlockName("Mithril Ore");
+	    blockDragon = new DragonBlockOre(DragonBlockID, 5).setHardness(3F).setResistance(5F).setStepSound(Block.soundStoneFootstep).setBlockName("Dragonite Ore");
 		
-		
-		
-		MinecraftForgeClient.preloadTexture("/Runescape/gui/items.png");
+	    GameRegistry.registerWorldGenerator(new RSWorldgenerator());
+	    
+	    MinecraftForgeClient.preloadTexture("/Runescape/gui/items.png");
         MinecraftForgeClient.preloadTexture("/Runescape/gui/terrian.png");
         
         ModLoader.registerBlock(blockAdamantite);
@@ -206,7 +226,7 @@ public class mod_Runescape extends BaseMod{
 		ModLoader.addName(axeAdamantite, "Adamantite Axe");
 		ModLoader.addName(pickaxeAdamantite, "Adamantite Pickaxe");	
 		ModLoader.addName(shovelAdamantite, "Adamantite Shovel");
-		
+
 		ModLoader.addRecipe(new ItemStack(hoeAdamantite), new Object[] {" XX", " @ ", " @ ", Character.valueOf('X'), Adamantiteignot, Character.valueOf('@'), Item.stick});
         ModLoader.addRecipe(new ItemStack(swordAdamantite), new Object[] {" X ", " X ", " @ ", Character.valueOf('X'), Adamantiteignot, Character.valueOf('@'), Item.stick});
         ModLoader.addRecipe(new ItemStack(axeAdamantite), new Object[] {"XX ", "X@ ", " @ ", Character.valueOf('X'), Adamantiteignot, Character.valueOf('@'), Item.stick});
@@ -218,16 +238,16 @@ public class mod_Runescape extends BaseMod{
 		ModLoader.addName(plateAdamantite, "Adamantite Chestplate");
 		ModLoader.addName(legsAdamantite, "Adamantite Leggings");
 		ModLoader.addName(bootsAdamantite, "Adamantite Boots");	
-		
+
 		ModLoader.addRecipe(new ItemStack(helmetAdamantite), new Object[] {"XXX", "X X", Character.valueOf('X'), Adamantiteignot});
         ModLoader.addRecipe(new ItemStack(plateAdamantite), new Object[] {"X X", "XXX", "XXX", Character.valueOf('X'), Adamantiteignot});
         ModLoader.addRecipe(new ItemStack(legsAdamantite), new Object[] {"XXX", "X X", "X X", Character.valueOf('X'), Adamantiteignot});
         ModLoader.addRecipe(new ItemStack(bootsAdamantite), new Object[] {"X X", "X X", Character.valueOf('X'), Adamantiteignot});
-		
+
         MinecraftForge.setToolClass(pickaxeAdamantite, "pickaxe", 3);
         MinecraftForge.setToolClass(shovelAdamantite, "shovel", 3);
         MinecraftForge.setToolClass(axeAdamantite, "axe", 3);
-	
+
         
         ModLoader.registerBlock(blockRune);
         ModLoader.addName(blockRune, "Rune Ore");
@@ -240,7 +260,7 @@ public class mod_Runescape extends BaseMod{
 		ModLoader.addName(axeRune, "Rune Axe");
 		ModLoader.addName(pickaxeRune, "Rune Pickaxe");	
 		ModLoader.addName(shovelRune, "Rune Shovel");
-		
+
 		ModLoader.addRecipe(new ItemStack(hoeRune), new Object[] {" XX", " @ ", " @ ", Character.valueOf('X'), Runeignot, Character.valueOf('@'), Item.stick});
         ModLoader.addRecipe(new ItemStack(swordRune), new Object[] {" X ", " X ", " @ ", Character.valueOf('X'), Runeignot, Character.valueOf('@'), Item.stick});
         ModLoader.addRecipe(new ItemStack(axeRune), new Object[] {"XX ", "X@ ", " @ ", Character.valueOf('X'), Runeignot, Character.valueOf('@'), Item.stick});
@@ -252,16 +272,16 @@ public class mod_Runescape extends BaseMod{
 		ModLoader.addName(plateRune, "Rune Chestplate");
 		ModLoader.addName(legsRune, "Rune Leggings");
 		ModLoader.addName(bootsRune, "Rune Boots");	
-		
+
 		ModLoader.addRecipe(new ItemStack(helmetRune), new Object[] {"XXX", "X X", Character.valueOf('X'), Runeignot});
         ModLoader.addRecipe(new ItemStack(plateRune), new Object[] {"X X", "XXX", "XXX", Character.valueOf('X'), Runeignot});
         ModLoader.addRecipe(new ItemStack(legsRune), new Object[] {"XXX", "X X", "X X", Character.valueOf('X'), Runeignot});
         ModLoader.addRecipe(new ItemStack(bootsRune), new Object[] {"X X", "X X", Character.valueOf('X'), Runeignot});
-		
+
         MinecraftForge.setToolClass(pickaxeRune, "pickaxe", 3);
         MinecraftForge.setToolClass(shovelRune, "shovel", 3);
         MinecraftForge.setToolClass(axeRune, "axe", 3);
-	
+
         ModLoader.registerBlock(blockBronze);
         ModLoader.addName(blockBronze, "Bronze Ore");
         ModLoader.addName(Bronzeignot, "Bronze Ignot");
@@ -273,7 +293,7 @@ public class mod_Runescape extends BaseMod{
 		ModLoader.addName(axeBronze, "Bronze Axe");
 		ModLoader.addName(pickaxeBronze, "Bronze Pickaxe");	
 		ModLoader.addName(shovelBronze, "Bronze Shovel");
-		
+
 		ModLoader.addRecipe(new ItemStack(hoeBronze), new Object[] {" XX", " @ ", " @ ", Character.valueOf('X'), Bronzeignot, Character.valueOf('@'), Item.stick});
         ModLoader.addRecipe(new ItemStack(swordBronze), new Object[] {" X ", " X ", " @ ", Character.valueOf('X'), Bronzeignot, Character.valueOf('@'), Item.stick});
         ModLoader.addRecipe(new ItemStack(axeBronze), new Object[] {"XX ", "X@ ", " @ ", Character.valueOf('X'), Bronzeignot, Character.valueOf('@'), Item.stick});
@@ -284,12 +304,12 @@ public class mod_Runescape extends BaseMod{
 		ModLoader.addName(plateBronze, "Bronze Chestplate");
 		ModLoader.addName(legsBronze, "Bronze Leggings");
 		ModLoader.addName(bootsBronze, "Bronze Boots");	
-		
+
 		ModLoader.addRecipe(new ItemStack(helmetBronze), new Object[] {"XXX", "X X", Character.valueOf('X'), Bronzeignot});
         ModLoader.addRecipe(new ItemStack(plateBronze), new Object[] {"X X", "XXX", "XXX", Character.valueOf('X'), Bronzeignot});
         ModLoader.addRecipe(new ItemStack(legsBronze), new Object[] {"XXX", "X X", "X X", Character.valueOf('X'), Bronzeignot});
         ModLoader.addRecipe(new ItemStack(bootsBronze), new Object[] {"X X", "X X", Character.valueOf('X'), Bronzeignot});
-		
+
         MinecraftForge.setToolClass(pickaxeBronze, "pickaxe", 2);
         MinecraftForge.setToolClass(shovelBronze, "shovel", 2);
         MinecraftForge.setToolClass(axeBronze, "axe", 2);
@@ -305,7 +325,7 @@ public class mod_Runescape extends BaseMod{
 		ModLoader.addName(axeSteel, "Steel Axe");
 		ModLoader.addName(pickaxeSteel, "Steel Pickaxe");	
 		ModLoader.addName(shovelSteel, "Steel Shovel");
-		
+
 		ModLoader.addRecipe(new ItemStack(hoeSteel), new Object[] {" XX", " @ ", " @ ", Character.valueOf('X'), Steelignot, Character.valueOf('@'), Item.stick});
         ModLoader.addRecipe(new ItemStack(swordSteel), new Object[] {" X ", " X ", " @ ", Character.valueOf('X'), Steelignot, Character.valueOf('@'), Item.stick});
         ModLoader.addRecipe(new ItemStack(axeSteel), new Object[] {"XX ", "X@ ", " @ ", Character.valueOf('X'), Steelignot, Character.valueOf('@'), Item.stick});
@@ -317,12 +337,12 @@ public class mod_Runescape extends BaseMod{
 		ModLoader.addName(plateSteel, "Steel Chestplate");
 		ModLoader.addName(legsSteel, "Steel Leggings");
 		ModLoader.addName(bootsSteel, "Steel Boots");	
-		
+
 		ModLoader.addRecipe(new ItemStack(helmetSteel), new Object[] {"XXX", "X X", Character.valueOf('X'), Steelignot});
         ModLoader.addRecipe(new ItemStack(plateSteel), new Object[] {"X X", "XXX", "XXX", Character.valueOf('X'), Steelignot});
         ModLoader.addRecipe(new ItemStack(legsSteel), new Object[] {"XXX", "X X", "X X", Character.valueOf('X'), Steelignot});
         ModLoader.addRecipe(new ItemStack(bootsSteel), new Object[] {"X X", "X X", Character.valueOf('X'), Steelignot});
-		
+
         MinecraftForge.setToolClass(pickaxeSteel, "pickaxe", 3);
         MinecraftForge.setToolClass(shovelSteel, "shovel", 3);
         MinecraftForge.setToolClass(axeSteel, "axe", 3);
@@ -338,7 +358,7 @@ public class mod_Runescape extends BaseMod{
 		ModLoader.addName(axeMithril, "Mithril Axe");
 		ModLoader.addName(pickaxeMithril, "Mithril Pickaxe");	
 		ModLoader.addName(shovelMithril, "Mithril Shovel");
-		
+
 		ModLoader.addRecipe(new ItemStack(hoeMithril), new Object[] {" XX", " @ ", " @ ", Character.valueOf('X'), Mithrilignot, Character.valueOf('@'), Item.stick});
         ModLoader.addRecipe(new ItemStack(swordMithril), new Object[] {" X ", " X ", " @ ", Character.valueOf('X'), Mithrilignot, Character.valueOf('@'), Item.stick});
         ModLoader.addRecipe(new ItemStack(axeMithril), new Object[] {"XX ", "X@ ", " @ ", Character.valueOf('X'), Mithrilignot, Character.valueOf('@'), Item.stick});
@@ -350,12 +370,12 @@ public class mod_Runescape extends BaseMod{
 		ModLoader.addName(plateMithril, "Mithril Chestplate");
 		ModLoader.addName(legsMithril, "Mithril Leggings");
 		ModLoader.addName(bootsMithril, "Mithril Boots");	
-		
+
 		ModLoader.addRecipe(new ItemStack(helmetMithril), new Object[] {"XXX", "X X", Character.valueOf('X'), Mithrilignot});
         ModLoader.addRecipe(new ItemStack(plateMithril), new Object[] {"X X", "XXX", "XXX", Character.valueOf('X'), Mithrilignot});
         ModLoader.addRecipe(new ItemStack(legsMithril), new Object[] {"XXX", "X X", "X X", Character.valueOf('X'), Mithrilignot});
         ModLoader.addRecipe(new ItemStack(bootsMithril), new Object[] {"X X", "X X", Character.valueOf('X'), Mithrilignot});
-		
+
         MinecraftForge.setToolClass(pickaxeMithril, "pickaxe", 3);
         MinecraftForge.setToolClass(shovelMithril, "shovel", 3);
         MinecraftForge.setToolClass(axeMithril, "axe", 3);
@@ -372,7 +392,7 @@ public class mod_Runescape extends BaseMod{
 		ModLoader.addName(axeDragon, "Dragon Axe");
 		ModLoader.addName(pickaxeDragon, "Dragon Pickaxe");	
 		ModLoader.addName(shovelDragon, "Dragon Shovel");
-		
+
 		ModLoader.addRecipe(new ItemStack(hoeDragon), new Object[] {" XX", " @ ", " @ ", Character.valueOf('X'), Dragonignot, Character.valueOf('@'), Item.stick});
         ModLoader.addRecipe(new ItemStack(swordDragon), new Object[] {" X ", " X ", " @ ", Character.valueOf('X'), Dragonignot, Character.valueOf('@'), Item.stick});
         ModLoader.addRecipe(new ItemStack(axeDragon), new Object[] {"XX ", "X@ ", " @ ", Character.valueOf('X'), Dragonignot, Character.valueOf('@'), Item.stick});
@@ -384,82 +404,25 @@ public class mod_Runescape extends BaseMod{
 		ModLoader.addName(plateDragon, "Dragon Chestplate");
 		ModLoader.addName(legsDragon, "Dragon Leggings");
 		ModLoader.addName(bootsDragon, "Dragon Boots");	
-		
+
 		ModLoader.addRecipe(new ItemStack(helmetDragon), new Object[] {"XXX", "X X", Character.valueOf('X'), Dragonignot});
         ModLoader.addRecipe(new ItemStack(plateDragon), new Object[] {"X X", "XXX", "XXX", Character.valueOf('X'), Dragonignot});
         ModLoader.addRecipe(new ItemStack(legsDragon), new Object[] {"XXX", "X X", "X X", Character.valueOf('X'), Dragonignot});
         ModLoader.addRecipe(new ItemStack(bootsDragon), new Object[] {"X X", "X X", Character.valueOf('X'), Dragonignot});
-		
+
         MinecraftForge.setToolClass(pickaxeDragon, "pickaxe", 3);
         MinecraftForge.setToolClass(shovelDragon, "shovel", 3);
         MinecraftForge.setToolClass(axeDragon, "axe", 3);
-       
-	}
+	    
+	 }
 	
-	
-	 
-	 public void generateSurface(World world, Random random, int chunkX, int chunkZ)
-     {
-             for(int i = 0; i < 7; i++)
-             {
-                     int randPosX = chunkX + random.nextInt(16);
-                     int randPosY = random.nextInt(20);
-                     int randPosZ = chunkZ + random.nextInt(16);
-                     (new WorldGenMinable(blockRune.blockID, 4)).generate(world, random, randPosX, randPosY, randPosZ);
-             }
-             
-             for(int i = 0; i < 7; i++)
-             {
-                     int randPosX = chunkX + random.nextInt(16);
-                     int randPosY = random.nextInt(20);
-                     int randPosZ = chunkZ + random.nextInt(16);
-                     (new WorldGenMinable(blockDragon.blockID, 4)).generate(world, random, randPosX, randPosY, randPosZ);
-             }
-             
-             for(int i = 0; i < 7; i++)
-             {
-                     int randPosX = chunkX + random.nextInt(16);
-                     int randPosY = random.nextInt(128);
-                     int randPosZ = chunkZ + random.nextInt(16);
-                     (new WorldGenMinable(blockBronze.blockID, 8)).generate(world, random, randPosX, randPosY, randPosZ);
-             }
-             
-             for(int i = 0; i < 7; i++)
-             {
-                     int randPosX = chunkX + random.nextInt(16);
-                     int randPosY = random.nextInt(60);
-                     int randPosZ = chunkZ + random.nextInt(16);
-                     (new WorldGenMinable(blockSteel.blockID, 8)).generate(world, random, randPosX, randPosY, randPosZ);
-             }
-             
-             for(int i = 0; i < 7; i++)
-             {
-                     int randPosX = chunkX + random.nextInt(16);
-                     int randPosY = random.nextInt(40);
-                     int randPosZ = chunkZ + random.nextInt(16);
-                     (new WorldGenMinable(blockAdamantite.blockID, 4)).generate(world, random, randPosX, randPosY, randPosZ);
-             }
-             for(int i = 0; i < 7; i++)
-             {
-                     int randPosX = chunkX + random.nextInt(16);
-                     int randPosY = random.nextInt(50);
-                     int randPosZ = chunkZ + random.nextInt(16);
-                     (new WorldGenMinable(blockMithril.blockID, 8)).generate(world, random, randPosX, randPosY, randPosZ);
-             }
-             
-     }
-	 
-	 public String getVersion() {
-	        return "1.2.5";
-	}
-	 
-	 public static int configurationProperties()
-     {
+	public static int configurationProperties()
+    {
 			lmconfiguration.load();
-			
+
 			SteelshovelShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Steel Shovel", lmconfiguration.CATEGORY_ITEM, 2945).value);
-			
-			
+
+
 
 			RuneBlockID = Integer.parseInt(lmconfiguration.getOrCreateBlockIdProperty("Rune Ore", 200).value);
 			BronzeBlockID = Integer.parseInt(lmconfiguration.getOrCreateBlockIdProperty("Bronze Ore", 201).value);
@@ -467,14 +430,14 @@ public class mod_Runescape extends BaseMod{
 			AdamantiteBlockID = Integer.parseInt(lmconfiguration.getOrCreateBlockIdProperty("Adamantite Ore", 203).value);
 			MithrilBlockID = Integer.parseInt(lmconfiguration.getOrCreateBlockIdProperty("Mithril Ore", 204).value);
 			DragonBlockID = Integer.parseInt(lmconfiguration.getOrCreateBlockIdProperty("Dragonite Ore", 205).value);
-			
+
 			BronzeignotShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Bronze Ignot", lmconfiguration.CATEGORY_ITEM, 2936).value);
 			RuneignotShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Rune Ignot", lmconfiguration.CATEGORY_ITEM, 2926).value);
 			SteelignotShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Steel Ignot", lmconfiguration.CATEGORY_ITEM, 2946).value);
 			AdamantiteignotShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Adamantite Ignot", lmconfiguration.CATEGORY_ITEM, 2947).value);
 			MithrilignotShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Mithril Ignot", lmconfiguration.CATEGORY_ITEM, 2957).value);
 			DragonignotShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Dragonite Ignot", lmconfiguration.CATEGORY_ITEM, 2967).value);
-			
+
 			RuneHelmetShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Rune Helmet", lmconfiguration.CATEGORY_ITEM, 2917).value);
 			RuneLegsShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Rune Legs", lmconfiguration.CATEGORY_ITEM, 2918).value);
 		    RunePlateShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Rune Chest", lmconfiguration.CATEGORY_ITEM, 2919).value);
@@ -484,8 +447,8 @@ public class mod_Runescape extends BaseMod{
 		    RuneswordShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Rune Sword", lmconfiguration.CATEGORY_ITEM, 2923).value);
 		    RunepickShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Rune Pickaxe", lmconfiguration.CATEGORY_ITEM, 2924).value);     
 		    RuneshovelShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Rune Shovel", lmconfiguration.CATEGORY_ITEM, 2925).value);
-		     
-			
+
+
 		    BronzeHelmetShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Bronze Helmet", lmconfiguration.CATEGORY_ITEM, 2927).value);
 		    BronzeLegsShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Bronze Legs", lmconfiguration.CATEGORY_ITEM, 2928).value);
 		    BronzePlateShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Bronze Chest", lmconfiguration.CATEGORY_ITEM, 2929).value);
@@ -495,8 +458,8 @@ public class mod_Runescape extends BaseMod{
 		    BronzeswordShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Bronze Sword", lmconfiguration.CATEGORY_ITEM, 2933).value);
 		    BronzepickShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Bronze Pickaxe", lmconfiguration.CATEGORY_ITEM, 2934).value);
 		    BronzeshovelShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Bronze Shovel", lmconfiguration.CATEGORY_ITEM, 2935).value);
-		    
-			
+
+
 		    SteelHelmetShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Steel Helmet", lmconfiguration.CATEGORY_ITEM, 2937).value);
 		    SteelLegsShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Steel Legs", lmconfiguration.CATEGORY_ITEM, 2938).value);
 		    SteelPlateShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Steel Chest", lmconfiguration.CATEGORY_ITEM, 2939).value);
@@ -505,7 +468,7 @@ public class mod_Runescape extends BaseMod{
 		    SteelaxeShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Steel Axe", lmconfiguration.CATEGORY_ITEM, 2942).value);
 		    SteelswordShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Steel Sword", lmconfiguration.CATEGORY_ITEM, 2943).value);
 		    SteelpickShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Steel Pickaxe", lmconfiguration.CATEGORY_ITEM, 2944).value);
-		    
+
 		    AdamantiteHelmetShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Adamantite Helmet", lmconfiguration.CATEGORY_ITEM, 2948).value);
 		    AdamantiteLegsShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Adamantite Legs", lmconfiguration.CATEGORY_ITEM, 2949).value);
 		    AdamantitePlateShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Adamantite Chest", lmconfiguration.CATEGORY_ITEM, 2950).value);
@@ -515,7 +478,7 @@ public class mod_Runescape extends BaseMod{
 		    AdamantiteswordShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Adamantite Sword", lmconfiguration.CATEGORY_ITEM, 2954).value);
 		    AdamantitepickShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Adamantite Pickaxe", lmconfiguration.CATEGORY_ITEM, 2955).value);
 		    AdamantiteshovelShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Adamantite Shovel", lmconfiguration.CATEGORY_ITEM, 2956).value);
-		    
+
 		    MithrilHelmetShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Mithril Helmet", lmconfiguration.CATEGORY_ITEM, 2958).value);
 		    MithrilLegsShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Mithril Legs", lmconfiguration.CATEGORY_ITEM, 2959).value);
 		    MithrilPlateShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Mithril Chest", lmconfiguration.CATEGORY_ITEM, 2960).value);
@@ -525,7 +488,7 @@ public class mod_Runescape extends BaseMod{
 		    MithrilswordShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Mithril Sword", lmconfiguration.CATEGORY_ITEM, 2964).value);
 		    MithrilpickShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Mithril Pickaxe", lmconfiguration.CATEGORY_ITEM, 2965).value);
 		    MithrilshovelShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Mithril Shovel", lmconfiguration.CATEGORY_ITEM, 2966).value);
-		    
+
 		    DragonHelmetShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Dragon Helmet", lmconfiguration.CATEGORY_ITEM, 2968).value);
 			DragonLegsShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Dragon Legs", lmconfiguration.CATEGORY_ITEM, 2969).value);
 		    DragonPlateShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Dragon Chest", lmconfiguration.CATEGORY_ITEM, 2970).value);
@@ -535,17 +498,17 @@ public class mod_Runescape extends BaseMod{
 		    DragonswordShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Dragon Sword", lmconfiguration.CATEGORY_ITEM, 2974).value);
 		    DragonpickShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Dragon Pickaxe", lmconfiguration.CATEGORY_ITEM, 2975).value);     
 		    DragonshovelShiftedIndex = Integer.parseInt(lmconfiguration.getOrCreateIntProperty("Dragon Shovel", lmconfiguration.CATEGORY_ITEM, 2976).value);
-	         
-	        
-	    	 
-	    	 
-	   	 
-	   	 
+
+
+
+
+
+
 
 			lmconfiguration.save();
-		 
-		return DragonBlockID;
-		 
-     }
 
+		return DragonBlockID;
+
+    }
+	
 }

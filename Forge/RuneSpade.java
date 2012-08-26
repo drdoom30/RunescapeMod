@@ -1,8 +1,6 @@
 package net.minecraft.src;
 
-import net.minecraft.src.forge.*;
-
-public class RuneSpade extends ItemSpade implements ITextureProvider
+public class RuneSpade extends ItemSpade
 {
         
         protected RuneSpade(int i, EnumToolMaterial enumtoolmaterial)

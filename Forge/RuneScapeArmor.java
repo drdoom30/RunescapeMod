@@ -1,10 +1,10 @@
 package net.minecraft.src;
 
-import net.minecraft.src.forge.*;
+import net.minecraftforge.common.IArmorTextureProvider;
 
-public class RuneScapeArmor extends ItemArmor implements ITextureProvider, IArmorTextureProvider
+public class RuneScapeArmor extends ItemArmor implements IArmorTextureProvider
 {
-	
+
 	public RuneScapeArmor(int i, EnumArmorMaterial enumarmormaterial, int j, int k)
 	{
         super(i, enumarmormaterial, j, k);
@@ -76,9 +76,5 @@ public class RuneScapeArmor extends ItemArmor implements ITextureProvider, IArmo
                 
                 
         }
-        
-        
-        
-        
 
 }

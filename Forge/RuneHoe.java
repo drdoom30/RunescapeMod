@@ -1,9 +1,6 @@
 package net.minecraft.src;
 
-import net.minecraft.src.forge.*;
-
-public class RuneHoe extends ItemHoe implements ITextureProvider
-{
+public class RuneHoe extends ItemHoe {
         
         protected RuneHoe(int i, EnumToolMaterial enumtoolmaterial)
         {

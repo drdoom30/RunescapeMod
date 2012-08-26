@@ -1,8 +1,6 @@
 package net.minecraft.src;
 
-import net.minecraft.src.forge.*;
-
-public class RuneAxe extends ItemAxe implements ITextureProvider
+public class RuneAxe extends ItemAxe 
 {
         
         protected RuneAxe(int i, EnumToolMaterial enumtoolmaterial)

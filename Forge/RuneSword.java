@@ -1,8 +1,6 @@
 package net.minecraft.src;
 
-import net.minecraft.src.forge.*;
-
-public class RuneSword extends ItemSword implements ITextureProvider
+public class RuneSword extends ItemSword 
 {
         
         protected RuneSword(int i, EnumToolMaterial enumtoolmaterial)
